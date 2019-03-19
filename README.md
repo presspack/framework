@@ -1,4 +1,4 @@
-# Integrating Wordpress with Laravel.
+# Seamlessly integrate Wordpress and Laravel.
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/presspack/framework.svg?style=flat-square)](https://packagist.org/packages/presspack/framework)
 [![Build Status](https://img.shields.io/travis/presspack/framework/master.svg?style=flat-square)](https://travis-ci.org/presspack/framework)
@@ -6,7 +6,7 @@
 [![Total Downloads](https://img.shields.io/packagist/dt/presspack/framework.svg?style=flat-square)](https://packagist.org/packages/presspack/framework)
 
 
-This is a work in progress, keep that in mind.
+This is a work in progress, use at your own risk. Be advised that you will be flying blind as documentation is not yet available.
 
 
 ## Installation
@@ -19,11 +19,11 @@ composer require presspack/framework
 
 ## Usage
 
-Wip.
+WIP.
 
 ### Testing
 
-Wip.
+WIP.
 
 ### Changelog
 
@@ -32,10 +32,6 @@ Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed re
 ## Contributing
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
-
-### Security
-
-If you discover any security related issues, please email freek@spatie.be instead of using the issue tracker.
 
 ## Credits
 
