@@ -1,0 +1,54 @@
+{
+  "name": "presspack/framework",
+  "description": "Integrating Wordpress with Laravel.",
+  "keywords": [
+    "presspack",
+    "framework"
+  ],
+  "homepage": "https://github.com/presspack/framework",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "João Pedro Magalhães",
+      "email": "joao@orgo.ee",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": "^7.1",
+    "corcel/acf": "^1.1",
+    "ircmaxell/random-lib": "^1.2",
+    "jgrossi/corcel": "^2.7"
+  },
+  "require-dev": {
+    "larapack/dd": "^1.0",
+    "phpunit/phpunit": "^7.0"
+  },
+  "autoload": {
+    "psr-4": {
+      "Presspack\\Framework\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "Presspack\\Framework\\Tests\\": "tests"
+    }
+  },
+  "scripts": {
+    "test": "vendor/bin/phpunit",
+    "test-coverage": "vendor/bin/phpunit --coverage-html coverage"
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Presspack\\Framework\\Providers\\ServiceProvider"
+      ],
+      "aliases": {
+        "Localize": "Presspack\\Framework\\Support\\Facades\\LocalizeFacade"
+      }
+    }
+  }
+}
