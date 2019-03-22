@@ -4,6 +4,7 @@ namespace Presspack\Framework\Providers;
 
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 use Presspack\Framework\Support\Localize;
+use Presspack\Framework\Post;
 
 class ServiceProvider extends BaseServiceProvider
 {
@@ -30,6 +31,10 @@ class ServiceProvider extends BaseServiceProvider
     public function register()
     {
         $this->commands($this->commands);
+
+        $this->app->bind('Presspack\Framework\Post', function ($app) {
+            return new Post();
+        });
 
         $this->app->singleton('Presspack\Framework\Localize', function ($app) {
             return new Localize();
