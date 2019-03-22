@@ -5,7 +5,7 @@ namespace Presspack\Framework;
 use Carbon\Carbon;
 use Corcel\Model\Post as BasePost;
 use Illuminate\Support\Facades\App;
-use Presspack\Framework\Support\Translation;
+use Presspack\Framework\Support\Translation\Translation;
 
 class Post extends BasePost
 {

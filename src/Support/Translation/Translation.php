@@ -1,6 +1,6 @@
 <?php
 
-namespace Presspack\Framework\Support;
+namespace Presspack\Framework\Support\Translation;
 
 use Presspack\Framework\Post;
 use Illuminate\Database\Eloquent\Model;
