@@ -55,7 +55,7 @@ class Environment
      */
     protected static function getKeyValue(string $key, string $value): array
     {
-        if (!$value) {
+        if (! $value) {
             $parts = explode('=', $key, 2);
             if (2 !== \count($parts)) {
                 throw new InvalidArgumentException('No value was set');
@@ -63,10 +63,10 @@ class Environment
             $key = $parts[0];
             $value = $parts[1];
         }
-        if (!self::isValidKey($key)) {
+        if (! self::isValidKey($key)) {
             throw new InvalidArgumentException('Invalid argument key');
         }
-        if (!\is_bool(strpos($value, ' '))) {
+        if (! \is_bool(strpos($value, ' '))) {
             $value = '"'.$value.'"';
         }
 
@@ -81,7 +81,7 @@ class Environment
         if (str_contains($key, '=')) {
             throw new InvalidArgumentException("Environment key should not contain '='");
         }
-        if (!preg_match('/^[a-zA-Z_]+$/', $key)) {
+        if (! preg_match('/^[a-zA-Z_]+$/', $key)) {
             throw new InvalidArgumentException('Invalid environment key. Only use letters and underscores');
         }
 

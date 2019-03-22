@@ -2,9 +2,9 @@
 
 namespace Presspack\Framework\Support;
 
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\App;
 
 class Localize
 {
@@ -20,7 +20,7 @@ class Localize
         $locale = $locale ?: app()['request']->segment(1);
         $segments = Str::start(implode('/', app()['request']->segments()), '/');
 
-        if (!$locale || !\in_array($locale, $this->supportedLocales(), true)) {
+        if (! $locale || ! \in_array($locale, $this->supportedLocales(), true)) {
             return header('Location: '.url(config('localization.default_locale').$segments));
         }
 

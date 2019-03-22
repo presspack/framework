@@ -2,8 +2,8 @@
 
 namespace Presspack\Framework\Support;
 
-use Illuminate\Database\Eloquent\Model;
 use Presspack\Framework\Post;
+use Illuminate\Database\Eloquent\Model;
 
 class Translation extends Model
 {

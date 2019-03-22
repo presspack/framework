@@ -32,7 +32,7 @@ class MakeCustomPostType extends GeneratorCommand
      */
     public function handle()
     {
-        if (false === parent::handle() && !$this->option('force')) {
+        if (false === parent::handle() && ! $this->option('force')) {
             return false;
         }
     }

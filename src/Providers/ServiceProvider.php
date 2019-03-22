@@ -2,9 +2,9 @@
 
 namespace Presspack\Framework\Providers;
 
-use Illuminate\Support\ServiceProvider as BaseServiceProvider;
-use Presspack\Framework\Support\Localize;
 use Presspack\Framework\Post;
+use Presspack\Framework\Support\Localize;
+use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
 class ServiceProvider extends BaseServiceProvider
 {

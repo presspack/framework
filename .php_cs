@@ -33,5 +33,7 @@ return PhpCsFixer\Config::create()
     'strict_comparison' => false,
     'strict_param' => true,
     'no_superfluous_phpdoc_tags' => true,
+    'ordered_imports' => ['sort_algorithm' => "length"],
+    'not_operator_with_successor_space' => true,
   ])
   ->setFinder($finder);

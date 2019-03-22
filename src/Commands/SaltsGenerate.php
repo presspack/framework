@@ -2,10 +2,10 @@
 
 namespace Presspack\Framework\Commands;
 
-use Illuminate\Console\Command;
-use Presspack\Framework\Support\Environment;
 use RandomLib\Factory;
 use SecurityLib\Strength;
+use Illuminate\Console\Command;
+use Presspack\Framework\Support\Environment;
 
 class SaltsGenerate extends Command
 {
