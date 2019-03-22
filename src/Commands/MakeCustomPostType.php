@@ -35,6 +35,7 @@ class MakeCustomPostType extends GeneratorCommand
         if (false === parent::handle() && ! $this->option('force')) {
             return false;
         }
+        $this->addToConfig();
     }
 
     /**
@@ -45,5 +46,10 @@ class MakeCustomPostType extends GeneratorCommand
     protected function getStub()
     {
         return __DIR__.'/../Support/stubs/postType.stub';
+    }
+
+    protected function addToConfig()
+    {
+        // TODO: find or write a package to write arrays and keep comments.
     }
 }

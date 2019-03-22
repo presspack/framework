@@ -2,8 +2,10 @@
 
 namespace Presspack\Framework\Providers;
 
+use Illuminate\Support\Str;
 use Presspack\Framework\Post;
 use Presspack\Framework\Support\Localize;
+use Presspack\Framework\Support\Translation\Strings;
 use Illuminate\Support\ServiceProvider as BaseServiceProvider;
 
 class ServiceProvider extends BaseServiceProvider
@@ -22,6 +24,12 @@ class ServiceProvider extends BaseServiceProvider
             $this->publishes([
                 __DIR__.'/../../config/presspack.php' => config_path('presspack.php'),
             ], 'config');
+        }
+
+        if (config('presspack.i18n')) {
+            Str::macro('get', function (string $string, string $locale = null) {
+                return (new Strings())->get($string, $locale);
+            });
         }
     }
 

@@ -8,20 +8,25 @@ use Illuminate\Support\Facades\App;
 
 class Localize
 {
+    protected $useDb = false;
+
     public function supportedLocales()
     {
-        $supported = DB::table('icl_languages')->where('active', '1')->pluck('code')->all();
+        $supported = $this->useDb
+            ? DB::table('icl_languages')->where('active', '1')->pluck('code')->all()
+            : config('presspack.supported_locales');
 
-        return $supported ?: config('localization.supported_locales');
+        return $supported ?: config('presspack.supported_locales');
     }
 
-    public function routes($locale = null)
+    public function routes(string $locale = null, bool $useDb = false)
     {
+        $this->useDb = $useDb;
         $locale = $locale ?: app()['request']->segment(1);
         $segments = Str::start(implode('/', app()['request']->segments()), '/');
 
         if (! $locale || ! \in_array($locale, $this->supportedLocales(), true)) {
-            return header('Location: '.url(config('localization.default_locale').$segments));
+            return header('Location: '.url(config('presspack.default_locale').$segments));
         }
 
         App::setLocale($locale);

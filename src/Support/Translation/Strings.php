@@ -20,7 +20,7 @@ class Strings extends Model
     {
         $locale = $locale ?: App::getLocale();
 
-        if ($locale == config('localization.default_locale')) {
+        if ($locale == config('presspack.default_locale')) {
             return $string;
         }
 
@@ -28,7 +28,7 @@ class Strings extends Model
             ->where('context', 'presspack')
             ->first();
 
-        if (!$table) {
+        if (! $table) {
             $this->addString($string);
 
             return $string;
@@ -48,7 +48,7 @@ class Strings extends Model
     public function addString($string)
     {
         $this->create([
-            'language' => config('localization.default_locale'),
+            'language' => config('presspack.default_locale'),
             'context' => 'presspack',
             'name' => md5($string),
             'value' => $string,
@@ -58,17 +58,5 @@ class Strings extends Model
             'domain_name_context_md5' => md5('presspack'.md5($string)),
             'translation_priority' => '',
         ]);
-
-        //$str = new self();
-        //$str->language = config('localization.default_locale');
-        //$str->context = 'presspack';
-        //$str->name = md5($string);
-        //$str->value = $string;
-        //$str->type = 'LINE';
-        //$str->status = 0;
-        //$str->gettext_context = '';
-        //$str->domain_name_context_md5 = md5('presspack' . md5($string));
-        //$str->translation_priority = '';
-        //$str->save();
     }
 }
