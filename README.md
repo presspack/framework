@@ -1,8 +1,10 @@
 # Seamlessly integrate Wordpress and Laravel.
 
 [![Latest Version on Packagist](https://img.shields.io/packagist/v/presspack/framework.svg?style=flat-square)](https://packagist.org/packages/presspack/framework)
+[![Software License](https://img.shields.io/github/license/presspack/framework.svg?style=flat-square)](LICENSE.md)
 [![Build Status](https://img.shields.io/travis/presspack/framework/master.svg?style=flat-square)](https://travis-ci.org/presspack/framework)
 [![Quality Score](https://img.shields.io/scrutinizer/g/presspack/framework.svg?style=flat-square)](https://scrutinizer-ci.com/g/presspack/framework)
+[![StyleCI](https://github.styleci.io/repos/176566666/shield?branch=master)](https://github.styleci.io/repos/176566666)
 [![Total Downloads](https://img.shields.io/packagist/dt/presspack/framework.svg?style=flat-square)](https://packagist.org/packages/presspack/framework)
 
 
