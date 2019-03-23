@@ -2,6 +2,8 @@
 
 namespace Presspack\Framework;
 
+use Illuminate\Support\Str;
+
 class Setup
 {
     public $config;
@@ -50,6 +52,26 @@ class Setup
 
     public function registerTaxonomies()
     {
+        foreach ($this->config['taxonomies'] as $taxonomy => $value) {
+            $singularName = isset($value['singular']) ? $value['singular'] : $taxonomy;
+            $pluralName = isset($value['plural']) ? $value['plural'] : Str::plural($taxonomy);
+
+            register_taxonomy(Str::slug($taxonomy), $value['post_types'], [
+                'labels' => [
+                    'name' => $pluralName,
+                    'singular_name' => $singularName,
+                    'menu_name' => $pluralName,
+                ],
+                'description' => '',
+                'public' => true,
+                'hierarchical' => true,
+                'show_ui' => true,
+                'show_admin_column' => false,
+                'show_in_nav_menus' => true,
+                'show_tagcloud' => false,
+                'single_value' => false,
+            ]);
+        }
     }
 
     public function registerTemplates()
@@ -75,8 +97,3 @@ class Setup
         }
     }
 }
-
-/*
- * TODO: Taxonomies
- * TODO: Repository version updater
- */
