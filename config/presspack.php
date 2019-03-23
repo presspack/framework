@@ -6,14 +6,14 @@ return [
     | Post Types
     |--------------------------------------------------------------------------
     |
-    | This value register all the custom post types with wordpress.
+    | This value registers all the custom post types with wordpress.
     | You can generate new post type with php artisan make:posttype :name
+    |
+    | Ex: [App\Book::class, App\Portfolio::class]
     |
     */
 
-    'post_types' => [
-        //App\CustomPost::class,
-    ],
+    'post_types' => [],
 
     /*
     |--------------------------------------------------------------------------
@@ -21,6 +21,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | Register all the templates you might need in wordpress.
+    |
     | Ex: ['post-type' => ['template-1', 'template-2']]
     |
     */
@@ -35,13 +36,12 @@ return [
     |--------------------------------------------------------------------------
     |
     | If the app supports wpml, you can define it here.
-    | Ex: ['post-type' => ['template-1', 'template-2']]
     |
     */
 
-    'i18n' => true,
-    'default_locale' => 'en',
-    'supported_locales' => ['en'],
+    'i18n'              => true,
+    'default_locale'    => 'en',
+    'supported_locales' => ['en'], // set this to null if you want this to be queried from the database everytime.
 
     /*
     |--------------------------------------------------------------------------
@@ -54,12 +54,12 @@ return [
     */
 
     'image_sizes' => [
-        'placeholder' => [30, 30, false],
-        'thumbnail' => [150, 150],
-        'medium' => [300, 300, false],
+        'placeholder'  => [30, 30, false],
+        'thumbnail'    => [150, 150],
+        'medium'       => [300, 300, false],
         'medium_large' => [768, 768, false],
-        'large' => [1200, 1200, false],
-        'larger' => [1920, 1920, false],
+        'large'        => [1200, 1200, false],
+        'larger'       => [1920, 1920, false],
     ],
 
     /*
@@ -67,7 +67,17 @@ return [
     | Taxonomies
     |--------------------------------------------------------------------------
     |
-    | Yet to be implemented.
+    | Here you can register the taxonomies you wish and assign them to
+    | post types.
+    |
+    | ex: [
+    |       'Taxonomy Name' => [
+    |         'post_types' => ['post', 'page'],
+    |         'singular' => 'Singular name', // optional
+    |         'plural' => 'Plural name', // optional
+    |       ]
+    |     ]
+    |
     |
     */
 
