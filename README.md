@@ -38,6 +38,8 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 ## Credits
 
 - [João Pedro Magalhães](https://github.com/jphms)
+- [Junior Grossi](https://github.com/jgrossi)
+- [Waavi](https://github.com/Waavi)
 - [All Contributors](../../contributors)
 
 ## License
