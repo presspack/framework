@@ -9,7 +9,7 @@ use Presspack\Framework\Support\Translation\Models\IclTranslation;
 
 class Post extends BasePost
 {
-    protected $postType;
+    protected $postType = 'post';
 
     public function __construct(array $attributes = [])
     {
@@ -34,25 +34,22 @@ class Post extends BasePost
 
     public function scopeGetTranslated($query, $lang = null)
     {
-        if ($lang) {
-            App::setLocale($lang);
-        }
-
         return $query->leftJoin('icl_translations AS tr', function ($join) {
             $join->on('posts.ID', '=', 'tr.element_id')
                 ->where('tr.element_type', '=', "post_{$this->postType}");
         })
-            ->where('tr.language_code', '=', App::getLocale())
+            ->where('tr.language_code', '=', $lang ?: App::getLocale())
             ->get();
     }
 
     public function translate($lang = null)
     {
-        if ($lang) {
-            App::setLocale($lang);
-        }
         $element = IclTranslation::where('element_id', $this->attributes['ID'])->first();
-        $translations = IclTranslation::where('trid', $element->trid)->where('language_code', App::getLocale())->first();
+
+        $translations = IclTranslation::where('trid', $element->trid)
+            ->where('language_code', $lang ?: App::getLocale())
+            ->first();
+
         if (empty($translations)) {
             $translations = IclTranslation::where('trid', $element->trid)->where('source_language_code', null)->first();
         }

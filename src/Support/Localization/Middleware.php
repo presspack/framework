@@ -8,12 +8,6 @@ use Presspack\Framework\Support\Facades\Localize;
 
 class Middleware
 {
-    /**
-     * Handle an incoming request.
-     *
-     *  @param  \Illuminate\Http\Request  $request
-     *  @param  int $segment     Index of the segment containing locale info
-     */
     public function handle($request, Closure $next, $segment = 0)
     {
         // Ignores all non GET requests:
@@ -23,8 +17,7 @@ class Middleware
 
         $currentUrl = $request->getUri();
         $uriLocale = Localize::getLocaleFromUrl($currentUrl, $segment);
-        $defaultLocale = config('app.locale');
-
+        $defaultLocale = config('presspack.default_locale');
         // If a locale was set in the url:
         if ($uriLocale) {
             // Set app locale
@@ -40,10 +33,6 @@ class Middleware
         }
 
         // If not, redirect to the default locale:
-        // Keep flash data.
-        if ($request->hasSession()) {
-            $request->session()->reflash();
-        }
 
         return redirect()->to(Localize::url($currentUrl, $defaultLocale, $segment));
     }

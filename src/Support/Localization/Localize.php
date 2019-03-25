@@ -2,7 +2,6 @@
 
 namespace Presspack\Framework\Support\Localization;
 
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
 
@@ -49,37 +48,12 @@ class Localize
         return $parsedUrl;
     }
 
-    public function isValidLocale(string $locale)
+    public function isValidLocale(string $locale): bool
     {
         return \in_array($locale, $this->supportedLocales, true);
     }
 
-    public function routes(string $locale = null)
-    {
-        $locale = $locale ?: app()['request']->segment(1);
-        $segments = Str::start(implode('/', app()['request']->segments()), '/');
-
-        if (! $locale || ! \in_array($locale, $this->supportedLocales(), true)) {
-            return header('Location: '.url(config('presspack.default_locale').$segments));
-        }
-
-        App::setLocale($locale);
-
-        return $locale;
-    }
-
-    /**
-     *  Localizes the given url to the given locale. Removes domain if present.
-     *  Ex: /home => /es/home, /en/home => /es/home, http://www.domain.com/en/home => /en/home, https:://domain.com/ => /en
-     *  If a non zero segment index is given, and the url doesn't have enought segments, the url is unchanged.
-     *
-     *  @param  string  $url
-     *  @param  string  $locale
-     *  @param  int $segment     Index of the segment containing locale info
-     *
-     *  @return string
-     */
-    public function url($url, $locale = null, $segment = 0)
+    public function url(string $url, string $locale = null, int $segment = 0): string
     {
         $locale = $locale ?: App::getLocale();
         $cleanUrl = $this->cleanUrl($url, $segment);
@@ -93,15 +67,13 @@ class Localize
     }
 
     /**
-     *  Removes the domain and locale (if present) of a given url.
-     *  Ex: http://www.domain.com/locale/random => /random, https://www.domain.com/random => /random, http://domain.com/random?param=value => /random?param=value.
+     * Removes the domain and locale (if present) of a given url.
      *
-     *  @param  string  $url
-     *  @param  int $segment     Index of the segment containing locale info
-     *
-     *  @return string
+     * Ex:
+     * http://www.domain.com/locale/random => /random,
+     * https://www.domain.com/random => /random, http://domain.com/random?param=value => /random?param=value.
      */
-    public function cleanUrl($url, $segment = 0)
+    public function cleanUrl(string $url, int $segment = 0): string
     {
         $parsedUrl = $this->parseUrl($url, $segment);
         // Remove locale from segments:
@@ -113,12 +85,10 @@ class Localize
         return $this->pathFromParsedUrl($parsedUrl);
     }
 
-    /*
-*  Returns the uri for the given parsed url based on its segments, query and fragment
-*
-*  @return string
-*/
-    protected function pathFromParsedUrl($parsedUrl)
+    /**
+     * Returns the uri for the given parsed url based on its segments, query and fragment.
+     */
+    protected function pathFromParsedUrl(array $parsedUrl): string
     {
         $path = '/'.implode('/', $parsedUrl['segments']);
         if ($parsedUrl['query']) {
@@ -130,9 +100,4 @@ class Localize
 
         return $path;
     }
-
-    // public static function url(string $url)
-    // {
-    //     return url(config('app.locale').Str::start($url, '/'));
-    // }
 }
