@@ -3,51 +3,74 @@
 namespace Presspack\Framework\Support\Translation;
 
 use Illuminate\Support\Facades\App;
-use Illuminate\Database\Eloquent\Model;
 
-class Strings extends Model
+class Strings
 {
-    protected $table = 'icl_strings';
-    protected $guarded = [];
-    public $timestamps = false;
+    /** @var \Illuminate\Support\Collection */
+    protected $iclStrings;
 
-    public function translations()
+    /** @var \Illuminate\Support\Collection */
+    protected $string;
+
+    /** @var string */
+    protected $translated;
+
+    /** @var string */
+    protected $locale;
+
+    /** @var bool */
+    protected $localeIsDefault = true;
+
+    public function __construct()
     {
-        return $this->hasMany(StringTranslation::class, 'string_id');
+        if (App::getLocale() != config('presspack.default_locale')) {
+            $this->localeIsDefault = false;
+
+            return $this->iclStrings = IclStrings::where('context', 'presspack')->get();
+        }
     }
 
-    public function get(string $string, string $locale = null)
+    public function get(string $string, string $locale = null): string
     {
-        $locale = $locale ?: App::getLocale();
+        $this->locale = $locale ?: App::getLocale();
+        $this->translated = $string;
 
-        if ($locale == config('presspack.default_locale')) {
-            return $string;
+        if ($this->localeIsDefault) {
+            return $this->translated;
         }
 
-        $table = $this->where('name', md5($string))
-            ->where('context', 'presspack')
-            ->first();
+        return $this->getTranslated();
+    }
 
-        if (! $table) {
-            $this->addString($string);
+    public function getTranslated(): string
+    {
+        if ($this->checkIfExists()) {
+            $translation = $this->string->translations->where('language', $this->locale)->first();
 
-            return $string;
+            if (isset($translation->value) && 10 == $translation->status) {
+                $this->translated = $translation->value;
+            }
         }
 
-        $translation = $table->translations
-            ->where('language', $locale)
-            ->first();
+        return $this->translated;
+    }
 
-        if (isset($translation->value) && 10 == $translation->status) {
-            return $translation->value;
+    public function checkIfExists(): bool
+    {
+        $this->string = $this->iclStrings->where('name', md5($this->translated))->first();
+
+        if (! $this->string) {
+            $this->addString($this->translated);
+
+            return false;
         }
 
-        return $string;
+        return true;
     }
 
     public function addString($string)
     {
-        $this->create([
+        IclStrings::create([
             'language' => config('presspack.default_locale'),
             'context' => 'presspack',
             'name' => md5($string),
