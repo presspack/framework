@@ -13,6 +13,6 @@ class Post extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'Presspack\Framework\Post';
+        return 'presspack/post';
     }
 }

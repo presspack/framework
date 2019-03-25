@@ -13,6 +13,6 @@ class Localize extends Facade
      */
     protected static function getFacadeAccessor()
     {
-        return 'Presspack\Framework\Localize';
+        return 'presspack/localize';
     }
 }
