@@ -5,7 +5,7 @@ namespace Presspack\Framework;
 use Carbon\Carbon;
 use Corcel\Model\Post as BasePost;
 use Illuminate\Support\Facades\App;
-use Presspack\Framework\Support\Translation\Translation;
+use Presspack\Framework\Support\Translation\Models\IclTranslation;
 
 class Post extends BasePost
 {
@@ -19,7 +19,7 @@ class Post extends BasePost
 
     public function wpml()
     {
-        return $this->hasOne(Translation::class, 'element_id');
+        return $this->hasOne(IclTranslation::class, 'element_id');
     }
 
     public function getTimeAgoAttribute()
@@ -51,10 +51,10 @@ class Post extends BasePost
         if ($lang) {
             App::setLocale($lang);
         }
-        $element = Translation::where('element_id', $this->attributes['ID'])->first();
-        $translations = Translation::where('trid', $element->trid)->where('language_code', App::getLocale())->first();
+        $element = IclTranslation::where('element_id', $this->attributes['ID'])->first();
+        $translations = IclTranslation::where('trid', $element->trid)->where('language_code', App::getLocale())->first();
         if (empty($translations)) {
-            $translations = Translation::where('trid', $element->trid)->where('source_language_code', null)->first();
+            $translations = IclTranslation::where('trid', $element->trid)->where('source_language_code', null)->first();
         }
         // Getting Post Object
         return self::find($translations->element_id);

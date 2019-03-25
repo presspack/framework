@@ -3,6 +3,7 @@
 namespace Presspack\Framework\Support\Translation;
 
 use Illuminate\Support\Facades\App;
+use Presspack\Framework\Support\Translation\Models\IclString;
 
 class Strings
 {
@@ -15,9 +16,6 @@ class Strings
     /** @var string */
     protected $translated;
 
-    /** @var string */
-    protected $locale;
-
     /** @var bool */
     protected $localeIsDefault = true;
 
@@ -25,14 +23,12 @@ class Strings
     {
         if (App::getLocale() != config('presspack.default_locale')) {
             $this->localeIsDefault = false;
-
-            return $this->iclStrings = IclStrings::where('context', 'presspack')->get();
+            $this->iclStrings = IclString::where('context', 'presspack')->get();
         }
     }
 
-    public function get(string $string, string $locale = null): string
+    public function get(string $string): string
     {
-        $this->locale = $locale ?: App::getLocale();
         $this->translated = $string;
 
         if ($this->localeIsDefault) {
@@ -45,7 +41,7 @@ class Strings
     public function getTranslated(): string
     {
         if ($this->checkIfExists()) {
-            $translation = $this->string->translations->where('language', $this->locale)->first();
+            $translation = $this->string->translations->where('language', App::getLocale())->first();
 
             if (isset($translation->value) && 10 == $translation->status) {
                 $this->translated = $translation->value;
@@ -70,7 +66,7 @@ class Strings
 
     public function addString($string)
     {
-        IclStrings::create([
+        IclString::create([
             'language' => config('presspack.default_locale'),
             'context' => 'presspack',
             'name' => md5($string),

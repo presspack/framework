@@ -36,8 +36,8 @@ class ServiceProvider extends BaseServiceProvider
         }
 
         if (config('presspack.i18n')) {
-            Str::macro('get', function (string $string, string $locale = null) {
-                return StringFacade::get($string, $locale);
+            Str::macro('get', function (string $string) {
+                return StringFacade::get($string);
             });
         }
     }
