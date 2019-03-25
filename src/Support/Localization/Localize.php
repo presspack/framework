@@ -39,12 +39,14 @@ class Localize
     protected function parseUrl(string $url, int $segment = 0)
     {
         $parsedUrl = parse_url($url);
-        $parsedUrl['segments'] = array_values(array_filter(explode('/', $parsedUrl['path']), 'strlen'));
-        $localeCandidate = Arr::get($parsedUrl['segments'], $segment, false);
-        $parsedUrl['locale'] = \in_array($localeCandidate, $this->supportedLocales, true) ? $localeCandidate : null;
-        $parsedUrl['query'] = Arr::get($parsedUrl, 'query', false);
-        $parsedUrl['fragment'] = Arr::get($parsedUrl, 'fragment', false);
-        unset($parsedUrl['path']);
+        if ($parsedUrl) {
+            $parsedUrl['segments'] = array_values(array_filter(explode('/', $parsedUrl['path']), 'strlen'));
+            $localeCandidate = Arr::get($parsedUrl['segments'], $segment, false);
+            $parsedUrl['locale'] = \in_array($localeCandidate, $this->supportedLocales, true) ? $localeCandidate : null;
+            $parsedUrl['query'] = Arr::get($parsedUrl, 'query', false);
+            $parsedUrl['fragment'] = Arr::get($parsedUrl, 'fragment', false);
+            unset($parsedUrl['path']);
+        }
 
         return $parsedUrl;
     }
