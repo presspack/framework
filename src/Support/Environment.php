@@ -2,6 +2,8 @@
 
 namespace Presspack\Framework\Support;
 
+use Illuminate\Support\Str;
+
 class Environment
 {
     public static function set(string $key, string $value = null, string $dir = './.env')
@@ -9,7 +11,7 @@ class Environment
         try {
             list($key, $value) = self::getKeyValue($key, $value);
         } catch (\InvalidArgumentException $e) {
-            return self::error($e->getMessage());
+            return $e->getMessage();
         }
         $envFilePath = "{$dir}";
         $contents = file_get_contents($envFilePath);
@@ -78,7 +80,7 @@ class Environment
      */
     protected static function isValidKey(string $key): bool
     {
-        if (str_contains($key, '=')) {
+        if (Str::contains($key, '=')) {
             throw new InvalidArgumentException("Environment key should not contain '='");
         }
         if (! preg_match('/^[a-zA-Z_]+$/', $key)) {

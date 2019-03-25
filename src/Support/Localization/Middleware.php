@@ -4,7 +4,7 @@ namespace Presspack\Framework\Support\Localization;
 
 use Closure;
 use Illuminate\Support\Facades\App;
-use Presspack\Framework\Support\Facades\Localize;
+use Presspack\Framework\Support\Facades\Localize as LocalizeFacade;
 
 class Middleware
 {
@@ -29,11 +29,11 @@ class Middleware
         // If no locale was set in the url, check the browser's locale:
         $browserLocale = substr($request->server('HTTP_ACCEPT_LANGUAGE'), 0, 2);
         if (Localize::isValidLocale($browserLocale)) {
-            return redirect()->to(Localize::url($currentUrl, $browserLocale, $segment));
+            return redirect()->to(LocalizeFacade::url($currentUrl, $browserLocale, $segment));
         }
 
         // If not, redirect to the default locale:
 
-        return redirect()->to(Localize::url($currentUrl, $defaultLocale, $segment));
+        return redirect()->to(LocalizeFacade::url($currentUrl, $defaultLocale, $segment));
     }
 }

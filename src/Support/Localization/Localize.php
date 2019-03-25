@@ -2,6 +2,7 @@
 
 namespace Presspack\Framework\Support\Localization;
 
+use Illuminate\Support\Arr;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\App;
 
@@ -39,10 +40,10 @@ class Localize
     {
         $parsedUrl = parse_url($url);
         $parsedUrl['segments'] = array_values(array_filter(explode('/', $parsedUrl['path']), 'strlen'));
-        $localeCandidate = array_get($parsedUrl['segments'], $segment, false);
+        $localeCandidate = Arr::get($parsedUrl['segments'], $segment, false);
         $parsedUrl['locale'] = \in_array($localeCandidate, $this->supportedLocales, true) ? $localeCandidate : null;
-        $parsedUrl['query'] = array_get($parsedUrl, 'query', false);
-        $parsedUrl['fragment'] = array_get($parsedUrl, 'fragment', false);
+        $parsedUrl['query'] = Arr::get($parsedUrl, 'query', false);
+        $parsedUrl['fragment'] = Arr::get($parsedUrl, 'fragment', false);
         unset($parsedUrl['path']);
 
         return $parsedUrl;
@@ -88,7 +89,7 @@ class Localize
     /**
      * Returns the uri for the given parsed url based on its segments, query and fragment.
      */
-    protected function pathFromParsedUrl(array $parsedUrl): string
+    protected function pathFromParsedUrl($parsedUrl): string
     {
         $path = '/'.implode('/', $parsedUrl['segments']);
         if ($parsedUrl['query']) {
