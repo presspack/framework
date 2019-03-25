@@ -16,7 +16,7 @@ class Middleware
         }
 
         $currentUrl = $request->getUri();
-        $uriLocale = Localize::getLocaleFromUrl($currentUrl, $segment);
+        $uriLocale = LocalizeFacade::getLocaleFromUrl($currentUrl, $segment);
         $defaultLocale = config('presspack.default_locale');
         // If a locale was set in the url:
         if ($uriLocale) {
@@ -28,7 +28,7 @@ class Middleware
 
         // If no locale was set in the url, check the browser's locale:
         $browserLocale = substr($request->server('HTTP_ACCEPT_LANGUAGE'), 0, 2);
-        if (Localize::isValidLocale($browserLocale)) {
+        if (LocalizeFacade::isValidLocale($browserLocale)) {
             return redirect()->to(LocalizeFacade::url($currentUrl, $browserLocale, $segment));
         }
 
